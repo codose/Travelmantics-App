@@ -17,6 +17,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 public class DealAdapter extends RecyclerView.Adapter<DealAdapter.DealViewHolder>{
@@ -37,6 +39,7 @@ public class DealAdapter extends RecyclerView.Adapter<DealAdapter.DealViewHolder
                     Log.d("Deal: ", td.getTitle());
                     td.setId(dataSnapshot.getKey());
                     deals.add(td);
+                    notifyItemInserted(deals.size() -1);
             }
 
             @Override
@@ -79,18 +82,24 @@ public class DealAdapter extends RecyclerView.Adapter<DealAdapter.DealViewHolder
 
     @Override
     public int getItemCount() {
-        return 0;
+        return deals.size();
     }
 
     public class DealViewHolder extends RecyclerView.ViewHolder {
         TextView tvTitle;
+        TextView tvDescription;
+        TextView tvPrice;
         public DealViewHolder(@NonNull View itemView) {
             super(itemView);
             tvTitle = (TextView) itemView.findViewById(R.id.tvTitle);
+            tvDescription = (TextView) itemView.findViewById(R.id.tvDescription);
+            tvPrice = (TextView) itemView.findViewById(R.id.tvPrice);
         }
 
         public void bind(TravelDeal deal){
             tvTitle.setText(deal.getTitle());
+            tvDescription.setText(deal.getDescription());
+            tvPrice.setText(deal.getPrice());
 
         }
     }
